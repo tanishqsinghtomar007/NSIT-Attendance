@@ -1,61 +1,91 @@
-# SmartAttend - Timetable-Driven College Attendance Management System
+SmartAttend — Smart Attendance Management System
 
-**SmartAttend** is a Phase-1 prototype of a college attendance management platform built for **Narnarayan Shastri Institute of Technology - Institute of Forensic Sciences & Cyber Security (NSIT-IFSCS)**.
+SmartAttend is a timetable-driven attendance management platform designed to simplify classroom attendance through QR-based check-ins, real-time monitoring, and automated reporting.
 
-Specifically configured for:
-- **Class**: B.Tech-M.Tech CSE (Cyber Security), Semester III, Room 109
-- **Students**: 33 Students (Roll 001 - 033, Enrollments `251943004001` to `251943004034`)
-- **Core Theory Subjects**: 6 Subjects (Maths-3, DSA, DBMS, Python, CO & Microprocessors, Cyber Security)
+The platform provides dedicated dashboards for students, faculty, and administrators, enabling efficient attendance tracking, lecture management, and centralized academic record-keeping.
 
----
+✨ Key Features
 
-## 🔑 Demo Credentials
+* QR-Based Attendance: Enables students to mark attendance using lecture-specific QR codes.
+* Timetable-Driven Scheduling: Allows faculty to confirm, cancel, or reschedule lectures.
+* Real-Time Monitoring: Uses WebSockets to deliver live attendance updates to faculty dashboards.
+* Student Dashboard: Displays overall attendance percentages and subject-wise breakdowns.
+* Faculty Dashboard: Supports lecture management, QR generation, attendance record editing, and Excel/CSV exports.
+* Admin Dashboard: Provides student roster management, subject management, audit logs, and low-attendance alerts.
+* Attendance Integrity: Implements database constraints to prevent duplicate attendance records and restrict multiple student submissions from the same device within a session.
 
-| Role | Username / Identifier | Password | Access Level |
-|---|---|---|---|
-| **Student** | `251943004001` or `student001@nsit.ac.in` | `Student@123` | View attendance %, subject breakdown, QR scan landing |
-| **Faculty** | `akash.thakkar@nsit.ac.in` | `Faculty@123` | Conduct/Cancel/Reschedule lectures, QR display, live WebSockets monitor, Record editor, Excel export |
-| **Admin** | `admin@nsit.ac.in` | `Admin@123` | Low attendance warning alerts (&lt;75%), Class roster, Subjects, Audit logs |
+🛠 Technology Stack
 
----
+Component	Technologies
+Frontend	Next.js 14, TypeScript, Tailwind CSS, Lucide Icons
+Backend	Python, FastAPI, SQLAlchemy, Pydantic
+Database	PostgreSQL / SQLite
+Authentication	Passlib, Bcrypt, PyJWT
+Real-Time Communication	FastAPI WebSockets
+Reporting	openpyxl, pandas
+QR Generation	Python qrcode
+Deployment	Docker, Docker Compose
 
-## 🚀 Quick Start Instructions
+👥 User Roles
 
-### Option 1: Running Locally with Python & Node.js
+Role	Capabilities
+Student	View attendance statistics and access QR-based attendance.
+Faculty	Manage lectures, conduct attendance, monitor sessions, and export reports.
+Administrator	Manage students and subjects, monitor attendance compliance, and review audit logs.
 
-#### 1. Backend Server (FastAPI)
-```bash
-# From workspace root directory
+🚀 Getting Started
+
+Prerequisites
+
+* Python
+* Node.js and npm
+* Docker and Docker Compose (optional)
+
+1. Start the Backend
+
+From the project root:
+
 .\venv\Scripts\python.exe backend/run.py
-```
-*Backend API will run on `http://localhost:8000` and automatically seed DB on first run.*
 
-#### 2. Frontend Application (Next.js)
-```bash
-# In another terminal
+Backend: http://localhost:8000
+
+2. Start the Frontend
+
+Open a separate terminal:
+
 cd frontend
+npm install
 npm run dev
-```
-*Frontend will run on `http://localhost:3000`.*
 
----
+Frontend: http://localhost:3000
 
-### Option 2: Running via Docker Compose
+Alternative: Docker
 
-```bash
-docker-compose up --build
-```
+If Docker Compose is configured:
 
----
+docker compose up --build
 
-## 🛠 Tech Stack & Key Features
+🔒 Security and Attendance Integrity
 
-- **Frontend**: Next.js 14 (App Router), TypeScript, Tailwind CSS, Lucide Icons.
-- **Backend**: Python FastAPI, SQLAlchemy, Pydantic, Passlib/Bcrypt, PyJWT, Python `qrcode`, `openpyxl`, `pandas`.
-- **Database**: PostgreSQL / SQLite with automatic seed populator.
-- **Real-Time**: FastAPI WebSockets broadcasting live QR scan events to faculty dashboards and projector mode.
-- **Anti-Proxy Constraints**:
-  - `UNIQUE(session_id, student_id)` - Enforces 1 attendance record per student per lecture.
-  - `UNIQUE(session_id, device_id)` - Server-issued HTTP-only device token prevents 1 device marking multiple students.
-- **Timetable Confirmation Engine**: Faculty confirms whether a lecture is **Conducting**, **Cancelled** (with reason, excluded from attendance %), or **Rescheduled**.
-- **Excel & CSV Sheet Export**: Generates attendance sheets matching the exact format of official college lesson attendance sheets.
+SmartAttend incorporates session-based attendance validation, database uniqueness constraints, and device-based restrictions to reduce duplicate submissions and discourage proxy attendance.
+
+These mechanisms improve attendance integrity but do not independently guarantee a student’s physical presence.
+
+Future Scope
+
+* Dynamic QR codes with expiration.
+* Automated attendance notifications.
+* Advanced analytics and reporting.
+* Multi-institution and multi-class support.
+* Configurable attendance policies.
+* Enhanced authentication and security controls.
+
+📌 Project Status
+
+Phase 1 — Prototype
+
+SmartAttend establishes the foundation for a modern attendance management service, combining timetable-driven workflows, QR-based attendance, role-based dashboards, real-time updates, and automated reporting.
+
+⸻
+
+SmartAttend — Simplifying attendance, empowering institutions.
